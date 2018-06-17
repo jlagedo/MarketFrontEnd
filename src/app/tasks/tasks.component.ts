@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from './Task';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-tasks',
@@ -7,15 +8,26 @@ import { Task } from './Task';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
-  myTask: Task =  {
-    id: 1,
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commod",
-    title: "Lorem Ipsum Dolor"
+
+  listTasks: Task[];
+
+  selectedTask: Task;
+
+  constructor(private taskService: TaskService) { 
+
   }
 
-  constructor() { }
-
   ngOnInit() {
+    this.getTasks();
+  }
+
+  getTasks(): void{
+    this.taskService.getTasks()
+      .subscribe(ret => this.listTasks = ret);
+  }
+
+  onSelect(task: Task): void{
+    this.selectedTask = task;
   }
 
 }

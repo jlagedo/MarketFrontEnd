@@ -1,5 +1,17 @@
-<div>
-<input [(ngModel)]=myTask.title placeholder="Title"/>
-<h2>{{myTask.title | uppercase}}</h2>
-<p>{{myTask.text}}</p>
+<div class="conteiner">
+    <h2>Lista Tarefas</h2>
+
+    <div class="card-columns">
+        <div class="card" *ngFor='let task of listTasks' (click)='onSelect(task)'>
+            <div class="card-body">
+                <h5 class="card-title">{{task.title | uppercase}}</h5>
+                <p class="card-text">{{task.text}}</p>
+                <a href="#" class="btn btn-primary">Edit</a>
+            </div>
+        </div> 
+    </div>
+
+
+    <app-task-detail [task]='selectedTask'></app-task-detail>
+
 </div>

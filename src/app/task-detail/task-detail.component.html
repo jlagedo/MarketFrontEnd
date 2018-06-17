@@ -1,0 +1,8 @@
+<div *ngIf='task'>
+    <h2>{{task.title | uppercase}}</h2>
+    <div>{{task.id}}</div>
+    <div>
+        <label>name: <input [(ngModel)]="task.title" placeholder="name"></label>
+    </div>
+
+</div>
