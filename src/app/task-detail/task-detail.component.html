@@ -1,8 +1,16 @@
-<div *ngIf='task'>
-    <h2>{{task.title | uppercase}}</h2>
-    <div>{{task.id}}</div>
-    <div>
-        <label>name: <input [(ngModel)]="task.title" placeholder="name"></label>
-    </div>
+<div *ngIf='task' >
+    <form>
+        <div class="form-group">
+            <label for="title">Título</label>
+            <input class="form-control" [(ngModel)]="task.title" 
+                name="title" id="title" placeholder="Título da tarefa" />
 
+        </div>
+
+        <div class="btn-group" role="group" aria-label="">
+                <button class="btn btn-primary">Salvar</button>
+                <button class="btn btn-secondary" (click)="goBack()">Volar</button>
+        </div>
+
+    </form>
 </div>

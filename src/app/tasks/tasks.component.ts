@@ -11,8 +11,6 @@ export class TasksComponent implements OnInit {
 
   listTasks: Task[];
 
-  selectedTask: Task;
-
   constructor(private taskService: TaskService) { 
 
   }
@@ -24,10 +22,6 @@ export class TasksComponent implements OnInit {
   getTasks(): void{
     this.taskService.getTasks()
       .subscribe(ret => this.listTasks = ret);
-  }
-
-  onSelect(task: Task): void{
-    this.selectedTask = task;
   }
 
 }

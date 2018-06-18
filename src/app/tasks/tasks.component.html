@@ -2,16 +2,17 @@
     <h2>Lista Tarefas</h2>
 
     <div class="card-columns">
-        <div class="card" *ngFor='let task of listTasks' (click)='onSelect(task)'>
+        <div class="card" *ngFor='let task of listTasks'>
             <div class="card-body">
                 <h5 class="card-title">{{task.title | uppercase}}</h5>
                 <p class="card-text">{{task.text}}</p>
-                <a href="#" class="btn btn-primary">Edit</a>
+                <button class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">Edit</button>
+
+                <footer class="blockquote-footer">{{task.registerDate | date:'medium'}}</footer>
             </div>
         </div> 
     </div>
 
-
-    <app-task-detail [task]='selectedTask'></app-task-detail>
+<!-- <app-task-detail [task]='selectedTask'></app-task-detail> -->
 
 </div>
