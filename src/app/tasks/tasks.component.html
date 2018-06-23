@@ -1,5 +1,5 @@
 <div class="conteiner">
-    <h2>Lista Tarefas</h2>
+    <h2>Tasker List</h2>
 
     <div class="card-columns">
         <div class="card" *ngFor='let task of listTasks'>
@@ -7,11 +7,14 @@
                 <h5 class="card-title">{{task.title | uppercase}}</h5>
                 <p class="card-text">{{task.text}}</p>
 
-                <button type="button" class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">Edit</button>
-                <button type="button" class="btn btn-danger" (click)="openModal(template,task)">Delete</button>
-
-                <footer class="blockquote-footer">{{task.registerDate | date:'medium'}}</footer>
+                <button type="button" class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">
+                    <span class="fa fa-edit"></span>
+                </button>
+                <button type="button" class="btn btn-danger" (click)="openModal(template,task)">
+                        <span class="fa fa-trash"></span>
+                </button>                
             </div>
+            <div class="card-footer text-muted">{{task.registerDate | date:'medium'}}</div>
         </div> 
     </div>
 

@@ -35,7 +35,13 @@ export class TasksComponent implements OnInit {
   }
 
   confirmaExcluir() {
+    this.taskService.deleteTask(this.selectedTask.id).subscribe();
 
+    let deleteId = this.listTasks.findIndex(t => t.id == this.selectedTask.id);
+    this.listTasks.splice(deleteId, 1);
+
+    this.selectedTask = null;
+    this.bsModalRef.hide();      
   }
 
   declinaExcluir() {

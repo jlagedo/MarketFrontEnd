@@ -24,6 +24,15 @@ export class TaskService {
     );
   }
 
+  deleteTask(id: string): Observable<Task> {
+    const url = this.apiPath + '/task/' + id;
+    return this.http.delete<Task>(url)
+    .pipe(
+      tap(t => this.log('removendo task id:' + id)),
+      catchError(this.handleError<Task>('deleteTask'))
+    );
+  }
+
   getTask(id: string): Observable<Task> {
     let tasks: Task[];
     return of(tasks.find(t => t.id === id));
