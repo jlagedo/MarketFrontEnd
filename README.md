@@ -27,3 +27,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+# Notes
+I need to write this somewhere, while coding bootstrap 4 html using angular 6 I observed that there were some layouts changes when rendering html using angular. Spent some time trying to figure it out.
+When angular 6 renders html it defaults to remove all white spaces. Well not an issue but a nice feature, but for my surprise, inline-block elements need those white spaces to add a default margin between then.
+
+https://stackoverflow.com/questions/50376396/is-angular-6-is-removing-default-element-margins
+
+https://github.com/angular/angular/issues/21049
+
+
