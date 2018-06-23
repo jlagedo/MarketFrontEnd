@@ -17,7 +17,7 @@ export class TaskService {
   private apiPath = '/api_task/api';
 
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiPath + "/task")
+    return this.http.get<Task[]>(this.apiPath + '/task')
     .pipe(
       tap(tasks => this.log('lista de tasks obt id')),
       catchError(this.handleError('getTasks', []))
