@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+
+import { BsModalService } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap';
 
 import { Task } from '../tasks/task';
 import { TaskService } from '../task.service';
@@ -11,26 +12,31 @@ import { TaskService } from '../task.service';
   styleUrls: ['./task-detail.component.css']
 })
 export class TaskDetailComponent implements OnInit {
-  @Input() task: Task;
+  public task: Task;
+  submitted = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private taskService: TaskService,
-    private location: Location
-  ) { }
-
+    public bsModalRef: BsModalRef,
+    private taskService: TaskService
+  ) { 
+    this.task = new Task;
+  }
+  
   ngOnInit() {
-    this.getTask();
+    
   }
 
-  getTask(): void {
-    // * converte string para number
-    const id = this.route.snapshot.paramMap.get('id');
-    this.taskService.getTask(id)
-      .subscribe(r => this.task = r);
+  close(): void {
+    this.bsModalRef.hide();
   }
 
-  goBack(): void {
-    this.location.back();
+  onSubmit() { 
+    let taskReturn = this.taskService.addTask(this.task).subscribe();
+    console.info(taskReturn);
+    this.submitted = true; 
+    this.bsModalRef.hide();
   }
+
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.task); }
 }

@@ -5,10 +5,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MessageService } from './message.service';
 import { Task } from './tasks/Task';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
+
+  public tempTaskList: Task[];
 
   constructor(
     private http: HttpClient,
@@ -19,7 +25,10 @@ export class TaskService {
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.apiPath + '/task')
     .pipe(
-      tap(tasks => this.log('lista de tasks obt id')),
+      tap(tasks => {
+        this.tempTaskList = tasks;
+        this.log('lista de tasks obtida');
+      }),
       catchError(this.handleError('getTasks', []))
     );
   }
@@ -28,8 +37,24 @@ export class TaskService {
     const url = this.apiPath + '/task/' + id;
     return this.http.delete<Task>(url)
     .pipe(
-      tap(t => this.log('removendo task id:' + id)),
+      tap(t => {
+        this.log('removendo task id:' + id);
+        let deleteId = this.tempTaskList.findIndex(t => t.id == id);
+        this.tempTaskList.splice(deleteId, 1);
+      }),
       catchError(this.handleError<Task>('deleteTask'))
+    );
+  }
+
+  addTask(task: Task): Observable<Task> {
+    const url = this.apiPath + '/task';
+    return this.http.post<Task>(url, task, httpOptions)
+    .pipe(
+      tap(t => {
+        this.tempTaskList.push(t);
+        this.log('Adding new Task');
+      }),
+      catchError(this.handleError<Task>('addTask'))
     );
   }
 

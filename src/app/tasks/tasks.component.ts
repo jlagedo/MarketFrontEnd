@@ -1,11 +1,13 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { BsModalService } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap';
 import { Task } from './Task';
 import { TaskService } from '../task.service';
+import { TaskDetailComponent } from '../task-detail/task-detail.component'
 
 @Component({
   selector: 'app-tasks',
+  providers: [TaskDetailComponent],
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
@@ -16,7 +18,7 @@ export class TasksComponent implements OnInit {
   selectedTask: Task;
 
   constructor(
-    private taskService: TaskService,
+    public taskService: TaskService,
     private bsModalService: BsModalService
   ) { }
 
@@ -34,12 +36,13 @@ export class TasksComponent implements OnInit {
     this.bsModalRef = this.bsModalService.show(template);
   }
 
+  openModalAdd(template: TemplateRef<any>) {
+    let options = Object.assign({}, { class: 'modal-dialog modal-dialog-centered' });
+    this.bsModalRef = this.bsModalService.show(TaskDetailComponent, options);
+  }
+
   confirmaExcluir() {
     this.taskService.deleteTask(this.selectedTask.id).subscribe();
-
-    let deleteId = this.listTasks.findIndex(t => t.id == this.selectedTask.id);
-    this.listTasks.splice(deleteId, 1);
-
     this.selectedTask = null;
     this.bsModalRef.hide();      
   }

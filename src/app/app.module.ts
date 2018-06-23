@@ -32,6 +32,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ModalModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TaskDetailComponent]
 })
 export class AppModule { }

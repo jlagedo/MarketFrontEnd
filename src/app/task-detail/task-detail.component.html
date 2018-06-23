@@ -1,16 +1,43 @@
-<div *ngIf='task' >
-    <form>
-        <div class="form-group">
-            <label for="title">Título</label>
-            <input class="form-control" [(ngModel)]="task.title" 
-                name="title" id="title" placeholder="Título da tarefa" />
-
-        </div>
-
-        <div class="btn-group" role="group" aria-label="">
-                <button class="btn btn-primary">Salvar</button>
-                <button class="btn btn-secondary" (click)="goBack()">Volar</button>
-        </div>
-
+<div class="modal-content">
+    <form #taskForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+        <h5 class="modal-title">New Task</h5>
+            <button type="button" class="close" data-dismiss="modal" (click)="close()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <div class="modal-body">
+        
+            <div class="form-group">
+                <label for="title" class="col-form-label">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" autocomplete="off"
+                required [(ngModel)]="task.title" #spy #title="ngModel">
+                <div [hidden]="title.valid || title.pristine" class="alert alert-danger">
+                    Title is required
+                </div>
+                <!-- <em>TODO: remove this: {{spy.className}}</em> -->
+            </div>
+            <div class="form-group">
+                <label for="text" class="col-form-label">Text:</label>
+                <textarea class="form-control" id="text" name="text" autocomplete="off"
+                required [(ngModel)]="task.text" #text="ngModel"></textarea>
+                <div [hidden]="text.valid || text.pristine" class="alert alert-danger">
+                    Text is required
+                </div>
+                <!-- TODO: remove this: {{task.text}} -->
+            </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">
+            <span class="fa fa-times"></span>
+            Close
+        </button>
+            
+        <button type="button" type="submit" class="btn btn-primary" [disabled]="!taskForm.form.valid">
+            <span class="fa fa-check"></span>
+            Ok
+        </button>
+    </div>
     </form>
 </div>
