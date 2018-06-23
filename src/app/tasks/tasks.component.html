@@ -6,7 +6,7 @@
         Add New Task
     </button>
 
-    <div class="card-columns">
+    <div class="card-columns" style="margin-top: 1em;">
         <div class="card" *ngFor='let task of taskService.tempTaskList'>
             <div class="card-body">
                 <h5 class="card-title">{{task.title | uppercase}}</h5>

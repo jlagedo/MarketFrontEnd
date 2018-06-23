@@ -1,7 +1,8 @@
-<div *ngIf="messageService.messages.length" 
-      class="alert alert-info alert-dismissible fade show" role="alert">
+<div class="container" >
+<div *ngIf="messageService.messages.length" class="alert alert-info" role="alert">
   <h4 class="alert-heading">Messages</h4>
   <button class="btn btn-secondary" (click)="messageService.clear()">clear</button>
   <div *ngFor='let message of messageService.messages'> {{message}} </div>
   
+</div>
 </div>

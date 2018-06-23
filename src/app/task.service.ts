@@ -27,6 +27,7 @@ export class TaskService {
     .pipe(
       tap(tasks => {
         this.tempTaskList = tasks;
+        this.sortTempList();
         this.log('lista de tasks obtida');
       }),
       catchError(this.handleError('getTasks', []))
@@ -38,9 +39,10 @@ export class TaskService {
     return this.http.delete<Task>(url)
     .pipe(
       tap(t => {
-        this.log('removendo task id:' + id);
-        let deleteId = this.tempTaskList.findIndex(t => t.id == id);
+        const deleteId = this.tempTaskList.findIndex(t => t.id === id);
         this.tempTaskList.splice(deleteId, 1);
+        this.sortTempList();
+        this.log('removendo task id:' + id);
       }),
       catchError(this.handleError<Task>('deleteTask'))
     );
@@ -52,6 +54,7 @@ export class TaskService {
     .pipe(
       tap(t => {
         this.tempTaskList.push(t);
+        this.sortTempList();
         this.log('Adding new Task');
       }),
       catchError(this.handleError<Task>('addTask'))
@@ -61,6 +64,34 @@ export class TaskService {
   getTask(id: string): Observable<Task> {
     let tasks: Task[];
     return of(tasks.find(t => t.id === id));
+  }
+
+  // getTotalTaskCount(): number {
+  //   let tasksToCount: Task[];
+  //   this.http.get<Task[]>(this.apiPath + '/task')
+  //   .pipe(
+  //     tap(tasks => {
+  //       tasksToCount = tasks;
+  //       this.log('getTotalTaskCount');
+  //     }),
+  //     catchError(this.handleError('getTasks', []))
+  //   ).subscribe(t => tasksToCount = t);
+  //   console.log(tasksToCount);
+  //   return tasksToCount.length;
+  // }
+
+  private sortTempList() {
+    this.tempTaskList = this.tempTaskList.sort((n1 , n2) => {
+      if (n1.registerDate > n2.registerDate) {
+        return -1;
+      }
+
+      if (n1.registerDate < n2.registerDate) {
+          return 1;
+      }
+
+      return 0;
+    });
   }
 
   private log(message: string) {

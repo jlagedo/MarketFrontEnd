@@ -3,7 +3,7 @@ import { BsModalService } from 'ngx-bootstrap';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Task } from './Task';
 import { TaskService } from '../task.service';
-import { TaskDetailComponent } from '../task-detail/task-detail.component'
+import { TaskDetailComponent } from '../task-detail/task-detail.component';
 
 @Component({
   selector: 'app-tasks',
@@ -37,7 +37,7 @@ export class TasksComponent implements OnInit {
   }
 
   openModalAdd(template: TemplateRef<any>) {
-    let options = Object.assign({}, { class: 'modal-dialog modal-dialog-centered' });
+    const options = Object.assign({}, { class: 'modal-dialog modal-dialog-centered' });
     this.bsModalRef = this.bsModalService.show(TaskDetailComponent, options);
   }
 
