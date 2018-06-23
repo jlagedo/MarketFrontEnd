@@ -6,7 +6,9 @@
             <div class="card-body">
                 <h5 class="card-title">{{task.title | uppercase}}</h5>
                 <p class="card-text">{{task.text}}</p>
-                <button class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">Edit</button>
+
+                <button type="button" class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">Edit</button>
+                <button type="button" class="btn btn-danger" (click)="openModal(template,task)">Delete</button>
 
                 <footer class="blockquote-footer">{{task.registerDate | date:'medium'}}</footer>
             </div>
@@ -14,5 +16,12 @@
     </div>
 
 <!-- <app-task-detail [task]='selectedTask'></app-task-detail> -->
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Deseja excluir?</p>
+        <button type="button" class="btn btn-default" (click)="confirmaExcluir()">Sim</button>
+        <button type="button" class="btn btn-primary" (click)="declinaExcluir()">Não</button>
+    </div>    
+</ng-template>
 
 </div>

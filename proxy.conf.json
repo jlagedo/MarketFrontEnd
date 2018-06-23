@@ -1,0 +1,7 @@
+{
+    "/api_task": {
+      "target": "http://localhost:51161",
+      "pathRewrite": {"^/api_task" : ""},
+      "secure": false
+    }
+  }

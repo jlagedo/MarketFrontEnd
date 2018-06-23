@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Task } from './Task';
 import { TaskService } from '../task.service';
 
@@ -10,10 +12,13 @@ import { TaskService } from '../task.service';
 export class TasksComponent implements OnInit {
 
   listTasks: Task[];
+  bsModalRef: BsModalRef;
+  selectedTask: Task;
 
-  constructor(private taskService: TaskService) { 
-
-  }
+  constructor(
+    private taskService: TaskService,
+    private bsModalService: BsModalService
+  ) { }
 
   ngOnInit() {
     this.getTasks();
@@ -24,4 +29,17 @@ export class TasksComponent implements OnInit {
       .subscribe(ret => this.listTasks = ret);
   }
 
+  openModal(template: TemplateRef<any>, task: Task){
+    this.selectedTask = task;
+    this.bsModalRef = this.bsModalService.show(template);
+  }
+
+  confirmaExcluir() {
+
+  }
+
+  declinaExcluir() {
+    this.selectedTask = null;
+    this.bsModalRef.hide();
+  }
 }

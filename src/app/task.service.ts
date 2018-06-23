@@ -14,8 +14,10 @@ export class TaskService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
+  private apiPath = "/api_task/api";
+
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>("http://localhost:51161/api/task")
+    return this.http.get<Task[]>(this.apiPath + "/task")
     .pipe( 
       tap(tasks => this.log("lista de tasks obtid")),
       catchError(this.handleError('getTasks', []))      
@@ -23,8 +25,7 @@ export class TaskService {
   }
 
   getTask(id: string): Observable<Task> {
-
-    var tasks: Task[];
+    let tasks: Task[];
     return of(tasks.find(t => t.id === id));
   }
 
