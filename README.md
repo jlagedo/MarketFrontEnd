@@ -36,4 +36,17 @@ https://stackoverflow.com/questions/50376396/is-angular-6-is-removing-default-el
 
 https://github.com/angular/angular/issues/21049
 
+So to summarize:
+In order to set angular compiler options in AOT compile (ng serve --aot, ng build --prod) you must alter the tsconfig.app.json to include:
+
+"angularCompilerOptions": {
+  "preserveWhitespaces": true
+},
+In order to set angular compiler options in JIT compile (ng serve) you must alter main.ts specifically the bootstrapModule call:
+
+platformBrowserDynamic().bootstrapModule(AppModule, {
+  preserveWhitespaces: true
+})
+.catch(err => console.log(err));
+To be consistent between JIT and AOT, you must alter both files!
 
