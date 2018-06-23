@@ -24,12 +24,12 @@ export class TasksComponent implements OnInit {
     this.getTasks();
   }
 
-  getTasks(): void{
+  getTasks(): void {
     this.taskService.getTasks()
       .subscribe(ret => this.listTasks = ret);
   }
 
-  openModal(template: TemplateRef<any>, task: Task){
+  openModal(template: TemplateRef<any>, task: Task) {
     this.selectedTask = task;
     this.bsModalRef = this.bsModalService.show(template);
   }

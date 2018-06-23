@@ -14,13 +14,13 @@ export class TaskService {
     private http: HttpClient,
     private messageService: MessageService) { }
 
-  private apiPath = "/api_task/api";
+  private apiPath = '/api_task/api';
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.apiPath + "/task")
-    .pipe( 
-      tap(tasks => this.log("lista de tasks obtid")),
-      catchError(this.handleError('getTasks', []))      
+    .pipe(
+      tap(tasks => this.log('lista de tasks obt id')),
+      catchError(this.handleError('getTasks', []))
     );
   }
 
@@ -35,13 +35,13 @@ export class TaskService {
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-   
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
-   
+
       // TODO: better job of transforming error for user consumption
       this.log(`${operation} failed: ${error.message}`);
-   
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
