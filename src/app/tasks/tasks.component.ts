@@ -44,7 +44,7 @@ export class TasksComponent implements OnInit {
   confirmaExcluir() {
     this.taskService.deleteTask(this.selectedTask.id).subscribe();
     this.selectedTask = null;
-    this.bsModalRef.hide();      
+    this.bsModalRef.hide();
   }
 
   declinaExcluir() {

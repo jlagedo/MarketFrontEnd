@@ -11,16 +11,12 @@ export class MessageService {
     private toastService: ToasterService
   ) { }
   add(message: string) {
-    //error info wait success warning
+    // error info wait success warning
     this.toastService.pop('info', 'Information', message);
   }
 
   addError(message: string) {
-    //error info wait success warning
+    // error info wait success warning
     this.toastService.pop('error', 'Sorry, something went wrong', message);
-  }
-
-  clear() {
-    this.messages = [];
   }
 }

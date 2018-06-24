@@ -39,7 +39,7 @@ export class TaskService {
     return this.http.delete<Task>(url)
     .pipe(
       tap(t => {
-        const deleteId = this.tempTaskList.findIndex(t => t.id === id);
+        const deleteId = this.tempTaskList.findIndex(temp => temp.id === id);
         this.tempTaskList.splice(deleteId, 1);
         this.sortTempList();
         this.log('removendo task id:' + id);

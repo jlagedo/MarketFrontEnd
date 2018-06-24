@@ -18,25 +18,25 @@ export class TaskDetailComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     private taskService: TaskService
-  ) { 
+  ) {
     this.task = new Task;
   }
-  
+
   ngOnInit() {
-    
   }
 
   close(): void {
     this.bsModalRef.hide();
   }
 
-  onSubmit() { 
-    let taskReturn = this.taskService.addTask(this.task).subscribe();
-    console.info(taskReturn);
-    this.submitted = true; 
+  onSubmit() {
+    this.taskService.addTask(this.task).subscribe();
+    this.submitted = true;
     this.bsModalRef.hide();
   }
 
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.task); }
+  // TODO Remove this
+  get diagnostic() {
+    return JSON.stringify(this.task);
+  }
 }

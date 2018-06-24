@@ -13,15 +13,15 @@ export class AppComponent implements OnInit {
 
   taskCount: Number = 0;
 
-  public config: ToasterConfig = 
+  public config: ToasterConfig =
     new ToasterConfig({
-      showCloseButton: false, 
-      tapToDismiss: true, 
+      showCloseButton: false,
+      tapToDismiss: true,
       timeout: 5000,
       positionClass: 'toast-bottom-right',
       animation: 'slideUp'
   });
-  
+
   constructor(
     private taskService: TaskService
   ){}
