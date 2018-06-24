@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { TaskService } from './task.service';
 import { ToasterConfig } from 'angular2-toaster';
+import { GoogleAuthServiceService } from './google-auth-service.service';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +24,19 @@ export class AppComponent implements OnInit {
   });
 
   constructor(
-    private taskService: TaskService
-  ){ }
+    private taskService: TaskService,
+    private googleAuthService: GoogleAuthServiceService,
+    private zone: NgZone
+  ){ 
+    window['angularComponentRef'] = {
+      zone: this.zone,
+      componentFn: (value) => this.googleSing(value),
+      component: this
+    }
+  }
+  public googleSing(value: any){
+    this.googleAuthService.logIn(value);
+  }
 
   ngOnInit() {
     this.taskService.getTasks().subscribe(
