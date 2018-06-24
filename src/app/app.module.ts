@@ -7,6 +7,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToasterModule, ToasterService} from 'angular2-toaster';
+
 import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
@@ -29,7 +32,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HttpClientModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BrowserAnimationsModule,
+    ToasterModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

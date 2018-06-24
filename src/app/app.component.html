@@ -1,5 +1,7 @@
 <nav class="nav navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href='/'>Market</a>
+    <a class="navbar-brand" href='/'>
+        <img alt="logo" src="/assets/logo.png" />
+    </a>
     <button class="navbar-toggler" type='button'
         data-toggle='collapse' data-target='#navbarNav' 
         aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
@@ -8,13 +10,23 @@
     <div class="navbarNav collapse navbar-collapse">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" routerLink="/" title="">Home</a>
+                <a class="nav-link" routerLink="/" title="">
+                    <span class="fa fa-home"></span>
+                    Home
+                </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" routerLink="/tasks" title="">
+                    <span class="fa fa-tasks"></span>
                     Tasks
                     <span class="badge badge-light">{{taskCount}}</span>
                     <span class="sr-only">task count</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/users" title="">
+                    <span class="fa fa-users"></span>
+                    Users
                 </a>
             </li>
         </ul>
@@ -24,4 +36,5 @@
 <div style="padding: 20px;">    
     <router-outlet></router-outlet>
 </div>
+<toaster-container [toasterconfig]="config"></toaster-container>
 <app-messages></app-messages>

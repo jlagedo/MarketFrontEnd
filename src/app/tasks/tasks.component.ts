@@ -36,7 +36,7 @@ export class TasksComponent implements OnInit {
     this.bsModalRef = this.bsModalService.show(template);
   }
 
-  openModalAdd(template: TemplateRef<any>) {
+  openModalAdd() {
     const options = Object.assign({}, { class: 'modal-dialog modal-dialog-centered' });
     this.bsModalRef = this.bsModalService.show(TaskDetailComponent, options);
   }
