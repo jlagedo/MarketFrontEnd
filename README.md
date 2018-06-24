@@ -71,9 +71,9 @@ The black magic is done using the file 'applicationHost.xdt'. place it on the pa
 ```
 ## Tell IIS to redirect de api calls
 
-```
 The following config tells IIS about the backend api and solves 'Angular' paths
 
+```XML
   <?xml version="1.0"?>
   <configuration>
     <system.webServer>
