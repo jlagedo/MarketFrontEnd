@@ -60,7 +60,7 @@ I have achived this doing the following steps
 
 The black magic is done using the file 'applicationHost.xdt'. place it on the parent wwwroot folder of azure 'App Service'
 
-'''xml
+```XML
   <?xml version="1.0"?>
   <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
       <system.webServer>
@@ -68,13 +68,12 @@ The black magic is done using the file 'applicationHost.xdt'. place it on the pa
           reverseRewriteHostInResponseHeaders="false" />
       </system.webServer>
   </configuration>
-'''
-
+```
 ## Tell IIS to redirect de api calls
 
+```
 The following config tells IIS about the backend api and solves 'Angular' paths
 
-'''xml
   <?xml version="1.0"?>
   <configuration>
     <system.webServer>
@@ -105,4 +104,4 @@ The following config tells IIS about the backend api and solves 'Angular' paths
       </rewrite>
     </system.webServer>
   </configuration>
-'''
+```
