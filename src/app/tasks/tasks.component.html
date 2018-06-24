@@ -1,23 +1,30 @@
 <div class="conteiner">
-    <h2>Tasker List</h2>
+    <h2 class="d-none d-lg-block">Tasker List</h2>
     
+    <div class="btn-group">
     <button type="button" class="btn btn-primary" (click)="openModalAdd()">
         <span class="fa fa-plus"></span>
         Add New Task
     </button>
 
+    <button type="button" class="btn btn-primary" disabled="disabled">
+        <span class="fa fa-share-square"></span>
+        Share With Users
+    </button>
+    </div>
+
     <div class="card-columns" style="margin-top: 1em;">
         <div class="card" *ngFor='let task of taskService.tempTaskList'>
             <div class="card-body">
-                <h5 class="card-title">{{task.title | uppercase}}</h5>
+                <h5 class="card-title">{{task.title | uppercase}}
+                    <button type="button" class="btn btn-danger float-right" (click)="openModal(template,task)">
+                        <span class="fa fa-trash-alt"></span>
+                    </button>   
+                </h5>
                 <p class="card-text">{{task.text}}</p>
-
-                <button type="button" class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">
+                <!-- <button type="button" class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">
                     <span class="fa fa-edit"></span>
-                </button>
-                <button type="button" class="btn btn-danger" (click)="openModal(template,task)">
-                        <span class="fa fa-trash"></span>
-                </button>                
+                </button> -->             
             </div>
             <div class="card-footer text-muted">{{task.registerDate | date:'medium'}}</div>
         </div> 

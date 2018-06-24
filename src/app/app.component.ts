@@ -10,7 +10,7 @@ import { ToasterConfig } from 'angular2-toaster';
 
 export class AppComponent implements OnInit {
   title = 'MarketFrontEnd';
-
+  isCollapsed = true;
   taskCount: Number = 0;
 
   public config: ToasterConfig =
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
       showCloseButton: false,
       tapToDismiss: true,
       timeout: 5000,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-bottom-center',
       animation: 'slideUp'
   });
 
