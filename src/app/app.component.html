@@ -35,8 +35,22 @@
     </div>
 </nav>
 
-<div style="padding: 20px;">    
+<main style="padding: 20px;">    
     <router-outlet></router-outlet>
-</div>
+</main>
+
 <toaster-container [toasterconfig]="config"></toaster-container>
-<app-messages></app-messages>
+
+<footer class="navbar navbar-inner">
+    <div class="row">
+        <a class="btn btn-link" href="https://github.com/jlagedo/MarketFrontEnd" alt="GitHub" target="_blank" >
+            <i class="fab fa-github"></i>
+            <span>GitHub</span>
+        </a>
+
+        <a class="btn btn-link" href="https://twitter.com/jlagedo" alt="Twitter" target="_blank" >
+            <i class="fab fa-twitter"></i>
+            <span>Twitter</span>
+        </a>
+    </div>
+</footer>

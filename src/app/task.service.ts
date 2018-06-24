@@ -28,7 +28,6 @@ export class TaskService {
       tap(tasks => {
         this.tempTaskList = tasks;
         this.sortTempList();
-        this.log('lista de tasks obtida');
       }),
       catchError(this.handleError('getTasks', []))
     );
@@ -42,7 +41,7 @@ export class TaskService {
         const deleteId = this.tempTaskList.findIndex(temp => temp.id === id);
         this.tempTaskList.splice(deleteId, 1);
         this.sortTempList();
-        this.log('removendo task id:' + id);
+        this.log('deleted id:' + id);
       }),
       catchError(this.handleError<Task>('deleteTask'))
     );
@@ -55,7 +54,7 @@ export class TaskService {
       tap(t => {
         this.tempTaskList.push(t);
         this.sortTempList();
-        this.log('Adding new Task');
+        this.log('task added');
       }),
       catchError(this.handleError<Task>('addTask'))
     );

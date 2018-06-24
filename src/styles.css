@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'node_modules/angular2-toaster/toaster.min.css';
 @import 'node_modules/@fortawesome/fontawesome-free/css/all.css';
+@import 'node_modules/@fortawesome/fontawesome-free/css/brands.css';
 @import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 body {
@@ -9,4 +10,8 @@ body {
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
+}
+
+footer {
+  background-color: rgba(255, 255,255, 0.9);
 }
