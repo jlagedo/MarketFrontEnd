@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private taskService: TaskService
-  ){}
+  ){ }
 
   ngOnInit() {
     this.taskService.getTasks().subscribe(
