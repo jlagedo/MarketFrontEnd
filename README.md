@@ -50,3 +50,59 @@ In order to set angular compiler options in JIT compile (ng serve) you must alte
   .catch(err => console.log(err));
 To be consistent between JIT and AOT, you must alter both files!
 
+# Azure Deploy
+
+The frontend aplication is just a bunch of HTML, Javascript and CSS files, soo to hook it with a backend api it's using a reverse proxy configuration.
+
+I have achived this doing the following steps
+
+## Activate the Proxy on App Service IIS
+
+The black magic is done using the file 'applicationHost.xdt'. place it on the parent wwwroot folder of azure 'App Service'
+
+'''xml
+  <?xml version="1.0"?>
+  <configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+      <system.webServer>
+          <proxy xdt:Transform="InsertIfMissing" enabled="true" preserveHostHeader="false" 
+          reverseRewriteHostInResponseHeaders="false" />
+      </system.webServer>
+  </configuration>
+'''
+
+## Tell IIS to redirect de api calls
+
+The following config tells IIS about the backend api and solves 'Angular' paths
+
+'''xml
+  <?xml version="1.0"?>
+  <configuration>
+    <system.webServer>
+      <staticContent>
+        <remove fileExtension=".woff"/>
+        <mimeMap fileExtension=".woff" mimeType="application/font-woff" />
+        <mimeMap fileExtension=".woff2" mimeType="font/woff2" />
+      </staticContent>
+      <rewrite>
+        <rewriteMaps>
+          <rewriteMap name="^(.*)$" />
+        </rewriteMaps>
+        <rules>
+          <rule name="redirect all requests" stopProcessing="true">
+            <match url="^(.*)$" />
+            <conditions logicalGrouping="MatchAll">
+              <add input="{REQUEST_URI}" pattern="/api_task(.*)$" negate="true" />
+              <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            </conditions>
+            <action type="Rewrite" url="/index.html" />
+          </rule>
+          <rule name="ProxyAdmin" stopProcessing="true">
+            <match url="api_task(.*)" />
+            <action type="Rewrite" url="https://api.azurewebsites.net/{R:1}" 
+              logRewrittenUrl="false" />
+          </rule>
+        </rules>
+      </rewrite>
+    </system.webServer>
+  </configuration>
+'''
