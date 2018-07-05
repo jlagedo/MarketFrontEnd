@@ -1,44 +1,19 @@
-<mat-toolbar color="primary" role="heading">
-    <mat-menu #appMenu="matMenu" color="primary">
-        <button mat-menu-item  routerLink="/">
-            <mat-icon>home</mat-icon>
-            <span>Home</span>
-        </button>
-        <button mat-menu-item routerLink="/tasks" >
-            <mat-icon matBadge="{{taskCount}}">list</mat-icon>
-            <span>Tasks</span>
-        </button>
-        <button mat-menu-item routerLink="/users" >
-            <mat-icon>contacts</mat-icon>
-            <span>Users</span>
-        </button>
-    </mat-menu>
-          
-    <button mat-icon-button [matMenuTriggerFor]="appMenu">
-        <mat-icon>menu</mat-icon>
+<mat-toolbar role="toolbar" color="primary">
+    <button mat-button routerLink="/">
+        <mat-icon class="icon">home</mat-icon>
+        Market
     </button>
-
-    <span>Market</span>
-
+    <button mat-button routerLink="/tasks">
+        <mat-icon class="icon">dashboard</mat-icon>
+        Tasks
+    </button>
     <span class="fill-remaining-space"></span>
+    <button mat-button routerLink="/">
+        <mat-icon class="icon">input</mat-icon>
+        Login
+    </button>
 </mat-toolbar>
-
 <main>
     <router-outlet></router-outlet>
 </main>
-
 <toaster-container [toasterconfig]="config"></toaster-container>
-
-<footer class="navbar navbar-inner">
-    <div class="row">
-        <a class="btn btn-link" href="https://github.com/jlagedo/MarketFrontEnd" alt="GitHub" target="_blank" >
-            <i class="fab fa-github"></i>
-            <span>GitHub</span>
-        </a>
-
-        <a class="btn btn-link" href="https://twitter.com/jlagedo" alt="Twitter" target="_blank" >
-            <i class="fab fa-twitter"></i>
-            <span>Twitter</span>
-        </a>
-    </div>
-</footer>
