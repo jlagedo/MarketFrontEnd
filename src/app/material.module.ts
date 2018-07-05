@@ -11,7 +11,11 @@ import {
     MatBadgeModule,
     MatDialogModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatInputModule
 } from '@angular/material/';
 
 @NgModule({
@@ -28,6 +32,10 @@ import {
         MatDialogModule,
         MatSidenavModule,
         MatListModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatInputModule
     ],
     exports: [
         CommonModule, 
@@ -41,6 +49,10 @@ import {
         MatDialogModule,
         MatSidenavModule,
         MatListModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatInputModule
     ],
     providers: [],
 })
