@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { BsModalService } from 'ngx-bootstrap';
-import { BsModalRef } from 'ngx-bootstrap';
-
 import { Task } from '../tasks/task';
 import { TaskService } from '../task.service';
 
@@ -16,7 +13,6 @@ export class TaskDetailComponent implements OnInit {
   submitted = false;
 
   constructor(
-    public bsModalRef: BsModalRef,
     private taskService: TaskService
   ) {
     this.task = new Task;
@@ -26,13 +22,13 @@ export class TaskDetailComponent implements OnInit {
   }
 
   close(): void {
-    this.bsModalRef.hide();
+    //this.bsModalRef.hide();
   }
 
   onSubmit() {
     this.taskService.addTask(this.task).subscribe();
     this.submitted = true;
-    this.bsModalRef.hide();
+    //this.bsModalRef.hide();
   }
 
   // TODO Remove this

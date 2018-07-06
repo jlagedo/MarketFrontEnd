@@ -2,14 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ModalModule } from 'ngx-bootstrap/modal';
-import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { MaterialModule } from './material.module'
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 import { AppComponent } from './app.component';
 import { TasksComponent } from './tasks/tasks.component';
@@ -18,6 +15,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
+import { TaskAddDialogComponent } from './task-add-dialog/task-add-dialog.component';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -26,22 +26,21 @@ import { UsersComponent } from './users/users.component';
     TaskDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    UsersComponent
+    UsersComponent,
+    TaskAddDialogComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    BsDropdownModule.forRoot(),
-    TooltipModule.forRoot(),
-    ModalModule.forRoot(),
     BrowserAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule,
     ToasterModule.forRoot(),
-    CollapseModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [TaskDetailComponent]
+  entryComponents: [TaskDetailComponent, TaskAddDialogComponent]
 })
 export class AppModule { }

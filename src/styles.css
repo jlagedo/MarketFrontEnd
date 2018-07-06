@@ -1,17 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import 'node_modules/angular2-toaster/toaster.min.css';
-@import 'node_modules/@fortawesome/fontawesome-free/css/all.css';
-@import 'node_modules/@fortawesome/fontawesome-free/css/brands.css';
-@import 'node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 body {
-  background: url('/assets/home.jpg') no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-}
-
-footer {
-  background-color: rgba(255, 255,255, 0.9);
+  margin: 0;
+  background-color: #e4e4e4;
 }

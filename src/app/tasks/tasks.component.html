@@ -1,37 +1,26 @@
-<div class="conteiner" style="margin: 1em;">
+<h2 >Tasker List</h2>
     
-    <h2 class="d-none d-lg-block">Tasker List</h2>
-    
-    <div class="btn-group">
-    <button type="button" class="btn btn-primary" (click)="openModalAdd()">
-        <span class="fa fa-plus"></span>
-        Add New Task
-    </button>
+<button mat-fab (click)="openModalAdd()" class="addButtonFloat">
+    <mat-icon>add</mat-icon>
+</button>
 
-    <button type="button" class="btn btn-primary" disabled="disabled">
-        <span class="fa fa-share-square"></span>
-        Share With Users
-    </button>
-    </div>
+<button type="button" class="btn btn-primary" disabled="disabled">
+    Share With Users
+</button>
 
-    <div class="card-columns" style="margin-top: 1em;">
-        <div class="card" *ngFor='let task of taskService.tempTaskList'>
-            <div class="card-body">
-                <h5 class="card-title">{{task.title | uppercase}}
-                    <button type="button" class="btn btn-danger float-right" (click)="openModal(template,task)">
-                        <span class="fa fa-trash-alt"></span>
-                    </button>   
-                </h5>
-                <p class="card-text">{{task.text}}</p>
-                <!-- <button type="button" class="btn btn-primary" routerLink="/tasksdetail/{{task.id}}">
-                    <span class="fa fa-edit"></span>
-                </button> -->             
-            </div>
-            <div class="card-footer text-muted">{{task.registerDate | date:'medium'}}</div>
-        </div> 
-    </div>
+<div id="card-container">
+<mat-card  *ngFor='let task of taskService.tempTaskList' class="task-card">
+    <mat-card-header>
+        <mat-card-title>{{task.title | uppercase}}</mat-card-title>
+        <mat-card-subtitle>{{task.registerDate | date:'medium'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>{{task.text}}</mat-card-content>
+    <mat-card-actions>
+        <button mat-button (click)="openModal(template,task)">Delete</button>
+    </mat-card-actions>
+</mat-card>
+</div>
 
-<!-- <app-task-detail [task]='selectedTask'></app-task-detail> -->
 <ng-template #template>
     <div class="modal-body text-center">
         <p>Deseja excluir?</p>
@@ -39,5 +28,3 @@
         <button type="button" class="btn btn-primary" (click)="declinaExcluir()">Não</button>
     </div>    
 </ng-template>
-
-</div>

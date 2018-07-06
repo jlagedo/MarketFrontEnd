@@ -1,9 +1,9 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap';
-import { BsModalRef } from 'ngx-bootstrap';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Task } from './Task';
 import { TaskService } from '../task.service';
 import { TaskDetailComponent } from '../task-detail/task-detail.component';
+import { TaskAddDialogComponent, TaskAddData } from '../task-add-dialog/task-add-dialog.component';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-tasks',
@@ -14,12 +14,11 @@ import { TaskDetailComponent } from '../task-detail/task-detail.component';
 export class TasksComponent implements OnInit {
 
   listTasks: Task[];
-  bsModalRef: BsModalRef;
   selectedTask: Task;
 
   constructor(
     public taskService: TaskService,
-    private bsModalService: BsModalService
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -31,24 +30,27 @@ export class TasksComponent implements OnInit {
       .subscribe(ret => this.listTasks = ret);
   }
 
-  openModal(template: TemplateRef<any>, task: Task) {
-    this.selectedTask = task;
-    this.bsModalRef = this.bsModalService.show(template);
-  }
-
   openModalAdd() {
-    const options = Object.assign({}, { class: 'modal-dialog modal-dialog-centered' });
-    this.bsModalRef = this.bsModalService.show(TaskDetailComponent, options);
+    const dialogRef = this.dialog.open(TaskAddDialogComponent, {
+      height: '400px',
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
+    //this.bsModalRef = this.bsModalService.show(TaskDetailComponent, options);
   }
 
   confirmaExcluir() {
     this.taskService.deleteTask(this.selectedTask.id).subscribe();
     this.selectedTask = null;
-    this.bsModalRef.hide();
+    //this.bsModalRef.hide();
   }
 
   declinaExcluir() {
     this.selectedTask = null;
-    this.bsModalRef.hide();
+    //this.bsModalRef.hide();
   }
 }

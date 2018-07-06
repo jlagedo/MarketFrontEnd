@@ -5,19 +5,10 @@
   <title>MarketFrontEnd</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="google-signin-client_id" content="715688325354-a04673dk8rqalmej1gljas23e613i3mr.apps.googleusercontent.com">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <app-root></app-root>
-
-    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
-    <script>
-      function onSignIn(googleUser) {
-        window['angularComponentRef'].zone.run(
-          () => {  window['angularComponentRef'].componentFn(googleUser); }
-        );
-      }
-    </script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </body>
 </html>
