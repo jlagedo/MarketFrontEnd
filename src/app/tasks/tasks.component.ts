@@ -32,7 +32,8 @@ export class TasksComponent implements OnInit {
 
   openModalAdd() {
     const dialogRef = this.dialog.open(TaskAddDialogComponent, {
-      width: '250px'
+      height: '400px',
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
