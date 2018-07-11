@@ -1,62 +1,64 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { MessageService } from './message.service';
-import { Task } from './tasks/Task';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { catchError, map, tap } from "rxjs/operators";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { MessageService } from "./message.service";
+import { Task } from "./tasks/Task";
+import { OidcSecurityService } from "angular-auth-oidc-client";
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ "Content-Type": "application/json" })
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TaskService {
-
   public tempTaskList: Task[];
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private _securityService: OidcSecurityService
+  ) {}
 
-  private apiPath = '/api_task/api';
+  private apiPath = "/api_task/api";
+  private headers: HttpHeaders = new HttpHeaders();
 
   getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiPath + '/task')
-    .pipe(
+    this.setHeaders();
+
+    return this.http.get<Task[]>(this.apiPath + "/task", { headers: this.headers }).pipe(
       tap(tasks => {
         this.tempTaskList = tasks;
         this.sortTempList();
       }),
-      catchError(this.handleError('getTasks', []))
+      catchError(this.handleError("getTasks", []))
     );
   }
 
   deleteTask(id: string): Observable<Task> {
-    const url = this.apiPath + '/task/' + id;
-    return this.http.delete<Task>(url)
-    .pipe(
+    const url = this.apiPath + "/task/" + id;
+    return this.http.delete<Task>(url).pipe(
       tap(t => {
         const deleteId = this.tempTaskList.findIndex(temp => temp.id === id);
         this.tempTaskList.splice(deleteId, 1);
         this.sortTempList();
-        this.log('deleted id:' + id);
+        this.log("deleted id:" + id);
       }),
-      catchError(this.handleError<Task>('deleteTask'))
+      catchError(this.handleError<Task>("deleteTask"))
     );
   }
 
   addTask(task: Task): Observable<Task> {
-    const url = this.apiPath + '/task';
-    return this.http.post<Task>(url, task, httpOptions)
-    .pipe(
+    const url = this.apiPath + "/task";
+    return this.http.post<Task>(url, task, httpOptions).pipe(
       tap(t => {
         this.tempTaskList.push(t);
         this.sortTempList();
-        this.log('task added');
+        this.log("task added");
       }),
-      catchError(this.handleError<Task>('addTask'))
+      catchError(this.handleError<Task>("addTask"))
     );
   }
 
@@ -80,13 +82,13 @@ export class TaskService {
   // }
 
   private sortTempList() {
-    this.tempTaskList = this.tempTaskList.sort((n1 , n2) => {
+    this.tempTaskList = this.tempTaskList.sort((n1, n2) => {
       if (n1.registerDate > n2.registerDate) {
         return -1;
       }
 
       if (n1.registerDate < n2.registerDate) {
-          return 1;
+        return 1;
       }
 
       return 0;
@@ -94,12 +96,11 @@ export class TaskService {
   }
 
   private log(message: string) {
-    this.messageService.add('TaskService: ' + message);
+    this.messageService.add("TaskService: " + message);
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = "operation", result?: T) {
     return (error: any): Observable<T> => {
-
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
@@ -109,5 +110,17 @@ export class TaskService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  private setHeaders() {
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.set("Content-Type", "application/json");
+    this.headers = this.headers.set("Accept", "application/json");
+
+    const token = this._securityService.getToken();
+    if (token !== "") {
+      const tokenValue = "Bearer " + token;
+      this.headers = this.headers.append("Authorization", tokenValue);
+    }
   }
 }
