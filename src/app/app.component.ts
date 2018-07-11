@@ -1,46 +1,86 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { TaskService } from './task.service';
-import { ToasterConfig } from 'angular2-toaster';
-import { GoogleAuthServiceService } from './google-auth-service.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ToasterConfig } from "angular2-toaster";
+import { Subscription } from "rxjs/Subscription";
+import { OidcSecurityService } from "angular-auth-oidc-client";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"]
 })
+export class AppComponent implements OnInit, OnDestroy {
+  isAuthorizedSubscription: Subscription | undefined;
+  isAuthorized = false;
 
-export class AppComponent implements OnInit {
-  title = 'MarketFrontEnd';
-  isCollapsed = true;
-  taskCount: Number = 0;
+  onChecksessionChanged: Subscription | undefined;
+  checksession = false;
 
-  public config: ToasterConfig =
-    new ToasterConfig({
-      showCloseButton: false,
-      tapToDismiss: true,
-      timeout: 5000,
-      positionClass: 'toast-bottom-center',
-      animation: 'slideUp'
+  name = "none";
+  userDataSubscription: Subscription | undefined;
+  userData = false;
+
+  public config: ToasterConfig = new ToasterConfig({
+    showCloseButton: false,
+    tapToDismiss: true,
+    timeout: 5000,
+    positionClass: "toast-bottom-center",
+    animation: "slideUp"
   });
 
-  constructor(
-    private taskService: TaskService,
-    private googleAuthService: GoogleAuthServiceService,
-    private zone: NgZone
-  ){ 
-    window['angularComponentRef'] = {
-      zone: this.zone,
-      componentFn: (value) => this.googleSing(value),
-      component: this
+  constructor(public oidcSecurityService: OidcSecurityService) {
+    if (this.oidcSecurityService.moduleSetup) {
+      this.doCallbackLogicIfRequired();
+    } else {
+      this.oidcSecurityService.onModuleSetup.subscribe(() => {
+        this.doCallbackLogicIfRequired();
+      });
     }
-  }
-  public googleSing(value: any){
-    this.googleAuthService.logIn(value);
   }
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe(
-      r => this.taskCount = r.length
-    );
+    this.isAuthorizedSubscription = this.oidcSecurityService
+      .getIsAuthorized()
+      .subscribe((isAuthorized: boolean) => {
+        this.isAuthorized = isAuthorized;
+      });
+
+    this.userDataSubscription = this.oidcSecurityService
+      .getUserData()
+      .subscribe((userData: any) => {
+        if (userData !== "") {
+          this.name = userData.name;
+          console.log(userData);
+        }
+
+        console.log("userData getting data");
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.isAuthorizedSubscription) {
+      this.isAuthorizedSubscription.unsubscribe();
+    }
+
+    if (this.isAuthorizedSubscription) {
+      this.isAuthorizedSubscription.unsubscribe();
+    }
+
+    this.oidcSecurityService.onModuleSetup.unsubscribe();
+    this.oidcSecurityService.onCheckSessionChanged.unsubscribe();
+    this.oidcSecurityService.onAuthorizationResult.unsubscribe();
+  }
+
+  login() {
+    this.oidcSecurityService.authorize();
+  }
+
+  logout() {
+    this.oidcSecurityService.logoff();
+  }
+
+  private doCallbackLogicIfRequired() {
+    if (window.location.hash) {
+      this.oidcSecurityService.authorizedCallback();
+    }
   }
 }

@@ -1,0 +1,23 @@
+.dash-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.dash-box > * {
+  margin: 8px;
+}
+
+.dash-header-image {
+  background-image: url("/assets/scrumy.jpg");
+  background-size: cover;
+}
+
+.dash-card{
+    flex: 0 1 24%;
+    
+}
+
+.dash-info{
+    flex: 0 1 100%;
+}
